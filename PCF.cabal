@@ -1,10 +1,10 @@
 name:                PCF
 version:             0.1.0.0
 synopsis:            A Haskell implementation of Programming Computable
-                     Functions (PCF) extended with Bool.
+                     Functions (PCF).
 description:         A Haskell implementation of Programming Computable
-                     Functions (PCF) extended with Bool.
-homepage:            https://github.com/githubuser/PCF#readme
+                     Functions (PCF).
+homepage:            https://github.com/bagnalla/PCF
 license:             MIT
 license-file:        LICENSE
 author:              Alexander Bagnall
@@ -49,4 +49,4 @@ test-suite PCF-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/PCF
+  location: https://github.com/bagnalla/PCF
