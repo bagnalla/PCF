@@ -2,6 +2,11 @@
 tru = \t:nat => \f:nat => t;
 fls = \t:nat => \f:nat => f;
 
+# Pairs of nats (function from bool to nat)
+mkPair = \n:nat => \m:nat => \b:bool => if b then m else n;
+fst = \p:bool->nat => p false;
+snd = \p:bool->nat => p true;
+
 # Logical operations on bools
 not = \x:bool => if x then false else true;
 and = \x:bool => \y:bool => if x then y else false;

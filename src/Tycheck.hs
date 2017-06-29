@@ -49,10 +49,10 @@ tycheckTerm ctx (TmApp fi t1 t2) = do
       else
         return $ TmApp (mkInfo ty2') t1' t2'
 
-tycheckTerm ctx (TmTrue fi) = do
+tycheckTerm ctx (TmTrue fi) =
   return $ TmTrue (mkInfo TyBool)
 
-tycheckTerm ctx (TmFalse fi) = do
+tycheckTerm ctx (TmFalse fi) =
   return $ TmFalse (mkInfo TyBool)
 
 tycheckTerm ctx (TmIf fi t1 t2 t3) = do
@@ -62,7 +62,7 @@ tycheckTerm ctx (TmIf fi t1 t2 t3) = do
   t3' <- assertTy ctx t3 ty2
   return $ TmIf (mkInfo ty2) t1' t2' t3'
 
-tycheckTerm ctx (TmZero fi) = do
+tycheckTerm ctx (TmZero fi) =
   return $ TmZero (mkInfo TyNat)
 
 tycheckTerm ctx (TmSucc fi t) = do

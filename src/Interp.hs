@@ -22,8 +22,7 @@ initState = (empty, [])
 
 -- Interpret a program by interpreting its commands in sequence.
 interpProg :: Prog info -> [CommandResult info]
-interpProg p =
-  evalState (do interpCommands (prog_of p)) initState
+interpProg = (`evalState` initState) . interpCommands . prog_of
 
 -- Use a state monad to interpret commands in sequence. The state is
 -- a global context mapping [Id]s to [Term]s and it is updated by CBind
