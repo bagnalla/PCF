@@ -1,0 +1,24 @@
+import standard
+
+pair = \f:nat => \s:nat => \b:nat->nat->nat => b f s;
+fst = \p:(nat->nat->nat)->nat => p tru;
+snd = \p:(nat->nat->nat)->nat => p fls;
+
+even = fix (\f:nat->bool => \n:nat =>
+             if iszero n then true else not (f (pred n)));
+odd = \x:nat => not (even x);
+
+x = minus 10 3;
+z = plus 2 3;
+a = mult z 4;
+b = pow 2 4;
+c = fact 5;
+d = mult 5 (fact 4);
+
+r1 = equal c d;
+r2 = and r1 (equal 101 101);
+
+eval (
+  # pow (div (div 1000 100) 5) 3
+  plus 1 3
+)

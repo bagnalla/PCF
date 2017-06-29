@@ -1,0 +1,30 @@
+module Main where
+
+import System.IO (hGetContents)
+import System.Environment (getArgs)
+import Ast
+import Preprocessor (substImports)
+import Parser (parseProg)
+import Tycheck (tycheckProg)
+import Interp (interpProg)
+
+main :: IO ()
+main = do
+  args <- getArgs
+  src <- readFile $ case args of
+                         [f] -> f
+                         [] -> "input.cf"
+  let src' = substImports src
+  let results = case parseAndTyCheck src' of
+        Left s -> error s
+        Right p' -> interpProg p'
+  let result = results!!(length results - 1)
+  case result of
+    Left s -> putStrLn $ show s
+    Right t -> putStrLn $ show t
+  -- putStrLn $ show results
+
+parseAndTyCheck f = do
+  p  <- parseProg "" f
+  p' <- tycheckProg p
+  return p'

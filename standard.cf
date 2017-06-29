@@ -1,0 +1,93 @@
+# Church bools
+tru = \t:nat => \f:nat => t;
+fls = \t:nat => \f:nat => f;
+
+# Logical operations on bools
+not = \x:bool => if x then false else true;
+and = \x:bool => \y:bool => if x then y else false;
+nand = \x:bool => \y:bool => not (and x y);
+or = \x:bool => \y:bool => if x then true else y;
+xor = \x:bool => \y:bool => if x then not y else y;
+xnor = \x:bool => \y:bool => not (xor x y);
+
+# wrappers around succ and pred
+suc = \x:nat => succ x;
+prd = \x:nat => pred x;
+
+# nat equality
+equal = fix (
+  \f:nat->nat->bool =>
+  \n:nat => \m:nat =>
+    if iszero n then iszero m else
+    and (not (iszero m)) (f (pred n) (pred m))
+);
+
+# less-than
+lt = fix (
+  \f:nat->nat->bool =>
+  \n:nat => \m:nat =>
+  if iszero n then not (iszero m) else
+  and (not (iszero m)) (f (pred n) (pred m))
+);
+
+# less-than-or-equal
+le = fix (
+  \f:nat->nat->bool =>
+  \n:nat => \m:nat =>
+    if iszero n then true else
+    and (not (iszero m)) (f (pred n) (pred m))
+);
+
+# greater-than
+gt = \n:nat => \m:nat => not (le m n);
+
+# greater-than-or-equal
+ge = \n:nat => \m:nat => not (lt m n);
+
+# addition
+plus = fix (
+  \f:nat->nat->nat =>
+  \n:nat => \m:nat =>
+    if iszero n then m else succ (f (pred n) m)
+);
+
+# subtraction
+minus = fix (
+  \f:nat->nat->nat =>
+  \n:nat => \m:nat =>
+    if iszero m then n else f (pred n) (pred m)
+);
+
+# multiplication
+mult = fix (
+  \f:nat->nat->nat =>
+  \n:nat => \m:nat =>
+    if iszero m then 0 else
+    if iszero (pred m) then n else
+    plus n (f n (pred m))
+);
+
+# division (n / 0 = 0)
+div = fix (
+  \f:nat->nat->nat =>
+  \n:nat => \m:nat =>
+    if or (iszero m) (lt n m) then 0 else
+    succ (f (minus n m) m)
+);
+
+# power
+pow = fix (
+  \f:nat->nat->nat =>
+  \n:nat => \m:nat =>
+    if iszero m then 1 else
+    if iszero (pred m) then n else
+    mult n (f n (pred m))
+);
+
+# factorial
+fact = fix (
+  \f:nat->nat =>
+  \n:nat =>
+    if iszero n then 1 else
+    mult n (f (pred n))
+);

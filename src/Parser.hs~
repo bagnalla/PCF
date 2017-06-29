@@ -1,0 +1,19 @@
+-- This module defines a parser to construct ASTs from source code.
+module Parser (parseProg) where
+
+import Text.ParserCombinators.Parsec
+
+import Ast
+import Context (Id(..))
+
+-- Returns either an error message or an untyped [Prog]
+parseProg :: String -> Either String (Prog ())
+parseProg s = Right $
+  Prog { pinfo_of = (),
+         prog_of = [CEval ()
+                     (TmApp ()
+                       (TmAbs () (Id "x") (TmSucc ()
+                                            (TmVar () (Id "x"))))
+                       (TmZero ()))] }
+
+-- parseProg s = Left "Parser error"
