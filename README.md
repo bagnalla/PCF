@@ -1,7 +1,7 @@
 # PCF
 A Haskell implementation of a Programming Computable Functions (PCF) interpreter.
 
-This is a statically typed lambda calculus with Booleans, natural numbers, and a fix operator for general recursion. It is heavily based on material from "Types and Programming Languages" by Benjamin Pierce.
+This is a statically typed lambda calculus with Booleans, natural numbers, and a fix operator for general recursion. It is heavily based on material from "Types and Programming Languages" by Benjamin Pierce. The evaluation strategy is call-by-value.
 
 See example.cf for an example program. To run it, type "stack build && stack exec PCF-exe example.cf" in the root project directory.
 
