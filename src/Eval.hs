@@ -11,7 +11,6 @@ import Core (isValue, termSubst, boolOf)
 -- Small-step evaluation.
 
 -- One step of evaluation. Returns Nothing if no step can be taken.
-
 eval1 :: Term info -> Maybe (Term info)
 eval1 (TmApp fi t1 t2)
   | not (isValue t1) = do
@@ -57,7 +56,6 @@ eval1 (TmPred fi t)
 eval1 _ = Nothing
 
 -- Reduce a term as much as possible.
-
 eval :: Term info -> Term info
 eval t =
   case do eval1 t of

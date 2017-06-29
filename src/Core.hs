@@ -1,5 +1,5 @@
--- This module provides utility functions for working with inner language
--- (mostly related to evaluation of terms).
+-- This module provides utility functions for working with the inner
+-- language (mostly related to evaluation of terms).
 
 module Core (
   isValue,
@@ -46,7 +46,7 @@ termSubst _ _ t                  = t
 boolOf :: Term info -> Bool
 boolOf (TmTrue _)  = True
 boolOf (TmFalse _) = False
-boolOf _           = error "boolOfRaw: expected boolean term"
+boolOf _           = error "boolOf: expected boolean term"
 
 info_of_term t =
   case t of
