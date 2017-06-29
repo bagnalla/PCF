@@ -1,5 +1,5 @@
 # PCF
-Haskell implementation of a Programming Computable Functions (PCF) interpreter.
+A Haskell implementation of a Programming Computable Functions (PCF) interpreter.
 
 This is a statically typed lambda calculus with Booleans, natural numbers, and a fix operator for general recursion. It is heavily based on material from "Types and Programming Languages" by Benjamin Pierce.
 
