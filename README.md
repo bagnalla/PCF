@@ -9,6 +9,6 @@ Some basic logical and arithmetic functions are defined in standard.cf. They can
 
 A program is a sequence of commands, each of which is either a bind or eval command (not counting imports).
 * bind - assign a term to a name in the global context, so that the name may appear free in the terms of subsequent commands.
-* eval - reduce a term to normal form (guaranteed to be a value by the type system).
+* eval - evaluate a term. Guaranteed by the type system to reduce to a value, given that it doesn't diverge.
 
 The result of the last command is displayed by the interpreter. It can be either bind or eval -- the result of a bind is a (Id, Term) pair; the result of an eval is the value resulting from reducing a term.
