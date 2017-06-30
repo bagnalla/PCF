@@ -1,12 +1,12 @@
 import standard
 
-pair = \f:nat => \s:nat => \b:nat->nat->nat => b f s;
-fst = \p:(nat->nat->nat)->nat => p tru;
-snd = \p:(nat->nat->nat)->nat => p fls;
+pair = \f:Nat => \s:Nat => \b:Nat->Nat->Nat => b f s;
+fst = \p:(Nat->Nat->Nat)->Nat => p tru;
+snd = \p:(Nat->Nat->Nat)->Nat => p fls;
 
-even = fix (\f:nat->bool => \n:nat =>
+even = fix (\f:Nat->Bool => \n:Nat =>
              if iszero n then true else not (f (pred n)));
-odd = \x:nat => not (even x);
+odd = \x:Nat => not (even x);
 
 x = minus 10 3;
 z = plus 2 3;

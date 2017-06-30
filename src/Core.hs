@@ -10,7 +10,7 @@ module Core (
   ) where
 
 import Ast
-import Context (Id)
+import Symtab (Id)
 
 isValue :: Term info -> Bool
 isValue (TmTrue _)      = True

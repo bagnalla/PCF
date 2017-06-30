@@ -9,7 +9,7 @@ module Ast (
   ) where
 
 import Data.List (intercalate)
-import Context (Id(..))
+import Symtab (Id(..))
 
 -------
 -- Types

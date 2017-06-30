@@ -16,7 +16,7 @@ module Lexer
 import Prelude hiding (lex)
 import Data.Char (chr)
 import Control.Monad ( liftM )
-import Context (Id(..))
+import Symtab (Id(..))
 }
 %wrapper "monadUserState"
 $digit = 0-9
@@ -27,8 +27,8 @@ tokens :-
   $white+                       ;
   "->"                          { lex' TokenArrow }
   "=>"                          { lex' TokenDoubleArrow }
-  bool                          { lex' TokenBoolTy }
-  nat                           { lex' TokenNatTy }
+  Bool                          { lex' TokenBoolTy }
+  Nat                           { lex' TokenNatTy }
   true                          { lex' $ TokenBool True }
   false                         { lex' $ TokenBool False }
   succ                          { lex' TokenSucc }
@@ -100,8 +100,8 @@ unLex TokenRParen          = ")"
 unLex TokenColon           = ":"
 unLex TokenSemicolon       = ";"
 unLex TokenBackslash       = "\\"
-unLex TokenBoolTy          = "bool"
-unLex TokenNatTy           = "nat"
+unLex TokenBoolTy          = "Bool"
+unLex TokenNatTy           = "Nat"
 unLex TokenArrow           = "->"
 unLex TokenDoubleArrow     = "=>"
 unLex (TokenBool b)        = show b

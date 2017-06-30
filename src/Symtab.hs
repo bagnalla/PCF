@@ -1,9 +1,9 @@
 -- Maybe this module should be called Symtab or something. It defines a
 -- type for identifiers along with an ADT for mapping them to values.
 
-module Context (
+module Symtab (
   Id(..),
-  Context,
+  Symtab,
   empty,
   add,
   get,
@@ -17,20 +17,20 @@ import qualified Data.Map.Strict as Map
 newtype Id = Id String
   deriving (Eq, Ord)
 
--- A Context maps Ids to values of some type
-type Context a = Map.Map Id a
+-- A Symtab maps Ids to values of some type
+type Symtab a = Map.Map Id a
 
--- The empty context
+-- The empty Symtab
 empty = Map.empty 
 
--- Add a binding to a context
+-- Add a binding to a Symtab
 add k = Map.insert k
 
 -- Get the value bound to an Id
 get k = Map.lookup k
 
 -- Fold over all key/value pairs
-fold :: (a -> Id -> b -> a) -> a -> Context b -> a
+fold :: (a -> Id -> b -> a) -> a -> Symtab b -> a
 fold f = Map.foldlWithKey f
 
 ----------------------

@@ -8,7 +8,7 @@ module Parser( parseProg ) where
 
 import Lexer
 import qualified Ast
-import Context (Id(..))
+import Symtab (Id(..))
 import Core (info_of_term)
 }
 

@@ -11,13 +11,13 @@ module Interp (
 
 import Control.Monad.State
 import Ast
-import Context (Context, Id, empty, add, fold)
+import Symtab (Symtab, Id, empty, add, fold)
 import Core (termSubst)
 import Eval (eval)
 
 type CommandResult info = Either (Id, Term info) (Term info)
 
-type InterpState info = (Context (Term info), [CommandResult info])
+type InterpState info = (Symtab (Term info), [CommandResult info])
 initState = (empty, [])
 
 -- Interpret a program by interpreting its commands in sequence.
@@ -25,30 +25,30 @@ interpProg :: Prog info -> [CommandResult info]
 interpProg = (`evalState` initState) . interpCommands . prog_of
 
 -- Use a state monad to interpret commands in sequence. The state is
--- a global context mapping [Id]s to [Term]s and it is updated by CBind
--- commands.
+-- a global environment mapping [Id]s to [Term]s and it is updated by
+-- CBind commands.
 interpCommands :: [Command info] -> State (InterpState info)
                     [CommandResult info]
 interpCommands [] = do
   (_, results) <- get
   return results
 interpCommands (c:cs) = do
-  (ctx, results) <- get
-  let res = interpCommand ctx c
+  (env, results) <- get
+  let res = interpCommand env c
   put $ case res of
-    Left (x, t) -> (add x (substContext ctx t) ctx, results ++ [res])
-    Right t -> (ctx, results ++ [res])
+    Left (x, t) -> (add x (substEnv env t) env, results ++ [res])
+    Right t -> (env, results ++ [res])
   interpCommands cs
 
 -- Interpret a single command by either returning an [(Id, Term)] pair
 -- or by evaluating the term it contains and returning its normal form.
-interpCommand :: Context (Term info) -> Command info ->
+interpCommand :: Symtab (Term info) -> Command info ->
                    Either (Id, Term info) (Term info)
 interpCommand _ (CBind fi id t) = Left (id, t)
-interpCommand ctx (CEval fi t) =
-  Right (eval (fold (\acc k v -> termSubst k v acc) t ctx))
+interpCommand env (CEval fi t) =
+  Right (eval (fold (\acc k v -> termSubst k v acc) t env))
 
--- Substitute all Ids bound in the context into the given term
--- (avoiding capture of course).
-substContext :: Context (Term info) -> Term info -> Term info
-substContext ctx t = fold (\acc k v -> termSubst k v acc) t ctx
+-- Substitute all Ids bound in the global environment into the given
+-- term (avoiding capture of course).
+substEnv :: Symtab (Term info) -> Term info -> Term info
+substEnv env t = fold (\acc k v -> termSubst k v acc) t env

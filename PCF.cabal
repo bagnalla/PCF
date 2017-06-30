@@ -17,7 +17,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Context Ast Core Lexer Parser Tycheck Eval Interp
+  exposed-modules:     Symtab Ast Core Lexer Parser Tycheck Eval Interp
                        Preprocessor
   build-depends:       base >= 4.7 && < 5
                      , containers

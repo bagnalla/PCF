@@ -10,7 +10,7 @@ module Tycheck (
 import Ast
 import Core (info_of_term, info_of_command)
 import Parser
-import Context (Context, empty, add, get)
+import Symtab (Symtab, empty, add, get)
 
 data TyInfo =
   TyInfo { ty_of :: Type }
@@ -24,7 +24,7 @@ ty_of_term = ty_of . info_of_term
 ty_of_command :: Command TyInfo -> Type
 ty_of_command = ty_of . info_of_command
 
-tycheckTerm :: Show info => Context Type -> Term info ->
+tycheckTerm :: Show info => Symtab Type -> Term info ->
                  Either String (Term TyInfo)
 tycheckTerm ctx (TmVar fi id) = do
   let ty = get id ctx
@@ -89,7 +89,7 @@ tycheckTerm ctx (TmFix fi t) = do
     _ ->
       Left $ "Type error: " ++ show (info_of_term t)
   
-assertTy :: Show info => Context Type -> Term info -> Type ->
+assertTy :: Show info => Symtab Type -> Term info -> Type ->
               Either String (Term TyInfo)
 assertTy ctx t ty = do
   t' <- tycheckTerm ctx t
@@ -98,7 +98,7 @@ assertTy ctx t ty = do
   else
     Right $ t'
 
-tycheckCommand :: Show info => Context Type -> Command info ->
+tycheckCommand :: Show info => Symtab Type -> Command info ->
                     Either String (Command TyInfo)
 tycheckCommand ctx (CBind fi id t) = do
   t' <- tycheckTerm ctx t
@@ -107,7 +107,7 @@ tycheckCommand ctx (CEval fi t) = do
   t' <- tycheckTerm ctx t
   return $ CEval (mkInfo (ty_of_term t')) t'
 
-tycheckCommands :: Show info => Context Type -> [Command info] ->
+tycheckCommands :: Show info => Symtab Type -> [Command info] ->
                      Either String [Command TyInfo]
 tycheckCommands ctx [] = return []
 tycheckCommands ctx (c:cs) = do
