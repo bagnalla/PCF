@@ -27,7 +27,8 @@ empty = Map.empty
 add k = Map.insert k
 
 -- Get the value bound to an Id
-get k = Map.lookup k
+get :: Id -> Symtab a -> Maybe a
+get = Map.lookup
 
 -- Fold over all key/value pairs
 fold :: (a -> Id -> b -> a) -> a -> Symtab b -> a

@@ -12,7 +12,8 @@ module Interp (
 import Control.Monad.State
 import Ast
 import Symtab (Symtab, Id, empty, add, fold)
-import Core (termSubst)
+import qualified Symtab (get)
+import Core (termSubst, freeVars)
 import Eval (eval)
 
 type CommandResult info = Either (Id, Term info) (Term info)
@@ -51,4 +52,9 @@ interpCommand env (CEval fi t) =
 -- Substitute all Ids bound in the global environment into the given
 -- term (avoiding capture of course).
 substEnv :: Symtab (Term info) -> Term info -> Term info
-substEnv env t = fold (\acc k v -> termSubst k v acc) t env
+substEnv env t =
+    foldl (\acc id ->
+            case Symtab.get id env of
+              Just v  -> termSubst id v acc
+              Nothing -> error "free variable not bound in environment")
+    t (freeVars t)

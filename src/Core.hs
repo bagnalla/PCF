@@ -4,6 +4,7 @@
 module Core (
   isValue,
   termSubst,
+  freeVars,
   boolOf,
   info_of_term,
   info_of_command
@@ -39,6 +40,22 @@ termSubst x e (TmPred fi t)      = TmPred fi (termSubst x e t)
 termSubst x e (TmIszero fi t)    = TmIszero fi (termSubst x e t)
 termSubst x e (TmFix fi t)       = TmFix fi (termSubst x e t)
 termSubst _ _ t                  = t
+
+--------------------------
+-- Free variables of a term
+
+freeVars :: Term info -> [Id]
+freeVars = aux []
+  where
+    aux bv (TmVar _ id)      = if id `elem` bv then [] else [id]
+    aux bv (TmAbs _ id _ t)  = aux (id:bv) t
+    aux bv (TmApp _ t1 t2)   = aux bv t1 ++ aux bv t2
+    aux bv (TmIf _ t1 t2 t3) = aux bv t1 ++ aux bv t2 ++ aux bv t3
+    aux bv (TmSucc _ t)      = aux bv t
+    aux bv (TmPred _ t)      = aux bv t
+    aux bv (TmIszero _ t)    = aux bv t
+    aux bv (TmFix _ t)       = aux bv t
+    aux _ _                  = []
 
 -------
 -- Misc
