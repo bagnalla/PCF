@@ -4,6 +4,7 @@ import Control.Monad
 import System.Environment (getArgs)
 import System.IO (hGetContents)
 import Ast
+import Core (isNumericValue, int_of_nat)
 import Interp (interpProg)
 import Parser (parseProg)
 import Preprocessor (importLines, substImports)
@@ -39,7 +40,9 @@ main = do
   let result = results!!(length results - 1)
   case result of
     Left s -> putStrLn $ show s
-    Right t -> putStrLn $ show t
+    Right t -> putStrLn $ (if isNumericValue t
+                            then show (int_of_nat t)
+                            else show t)
 
   -- Show all results
   -- putStrLn $ show results

@@ -3,11 +3,13 @@
 
 module Core (
   isValue,
+  isNumericValue,
   termSubst,
   freeVars,
   boolOf,
   info_of_term,
-  info_of_command
+  info_of_command,
+  int_of_nat
   ) where
 
 import Ast
@@ -83,3 +85,10 @@ info_of_command c =
   case c of
     CBind fi _ _ -> fi
     CEval fi _   -> fi
+
+int_of_nat t =
+  case t of
+    TmZero _   -> 0
+    TmSucc _ t -> int_of_nat t + 1
+    TmPred _ t -> int_of_nat t - 1
+    _          -> error "intOfNat: expected a nat term"

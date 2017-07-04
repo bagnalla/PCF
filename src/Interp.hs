@@ -53,6 +53,7 @@ interpCommand env (CEval fi t) =
 -- term (avoiding capture of course).
 substEnv :: Symtab (Term info) -> Term info -> Term info
 substEnv env t =
+  -- fold (\acc k v -> termSubst k v acc) t env
     foldl (\acc id ->
             case Symtab.get id env of
               Just v  -> termSubst id v acc

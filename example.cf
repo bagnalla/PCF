@@ -15,10 +15,12 @@ b = pow 2 4;
 c = fact 5;
 d = mult 5 (fact 4);
 
-r1 = equal c d;
-r2 = and r1 (equal 101 101);
+b1 = equal c d;
+r2 = pow 2 (fact 3);
+r3 = mult 7 (fact 4);
 
 eval (
-  pow (div (div 1000 100) 5) 3
+  # pow (div (div 1000 100) 5) 3
   # plus 1 3
+  if b1 then r3 else r2
 )

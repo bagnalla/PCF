@@ -67,35 +67,35 @@ instance Show Type where
   show TyNat = "nat"
   show (TyArrow t1 t2) = show t1 ++ "->" ++ show t2
 
--- instance Show (Term info) where
---   show (TmVar _ id)      = show id
---   show (TmAbs _ id ty t) = "(\\" ++ show id ++ ":" ++ show ty ++
---                              " => " ++ show t ++ ")"
---   show (TmApp _ t1 t2)   = show t1 ++ " " ++ show t2
---   show (TmTrue _)        = "true"
---   show (TmFalse _)       = "false"
---   show (TmIf _ t1 t2 t3) = "if " ++ show t1 ++ " then " ++
---                              show t2 ++ " else " ++ show t3
---   show (TmZero _)        = "0"
---   show (TmSucc _ t)      = "(succ " ++ show t ++ ")"
---   show (TmPred _ t)      = "(pred " ++ show t ++ ")"
---   show (TmIszero _ t)    = "(iszero " ++ show t ++ ")"
---   show (TmFix _ t)       = "(fix " ++ show t ++ ")"
-
 instance Show (Term info) where
   show (TmVar _ id)      = show id
-  show (TmAbs _ id ty t) = "(TmAbs " ++ show id ++ " " ++ show ty ++
-                             " " ++ show t ++ ")"
-  show (TmApp _ t1 t2)   = "(TmApp " ++ show t1 ++ " " ++ show t2 ++ ")"
+  show (TmAbs _ id ty t) = "(\\" ++ show id ++ ":" ++ show ty ++
+                             " => " ++ show t ++ ")"
+  show (TmApp _ t1 t2)   = "(" ++ show t1 ++ " " ++ show t2 ++ ")"
   show (TmTrue _)        = "true"
   show (TmFalse _)       = "false"
-  show (TmIf _ t1 t2 t3) = "(TmIf " ++ show t1 ++ " " ++ show t2 ++
-                             " " ++ show t3 ++ ")"
+  show (TmIf _ t1 t2 t3) = "if " ++ show t1 ++ " then " ++
+                             show t2 ++ " else " ++ show t3
   show (TmZero _)        = "0"
   show (TmSucc _ t)      = "(succ " ++ show t ++ ")"
   show (TmPred _ t)      = "(pred " ++ show t ++ ")"
   show (TmIszero _ t)    = "(iszero " ++ show t ++ ")"
   show (TmFix _ t)       = "(fix " ++ show t ++ ")"
+
+-- instance Show (Term info) where
+--   show (TmVar _ id)      = show id
+--   show (TmAbs _ id ty t) = "(TmAbs " ++ show id ++ " " ++ show ty ++
+--                              " " ++ show t ++ ")"
+--   show (TmApp _ t1 t2)   = "(TmApp " ++ show t1 ++ " " ++ show t2 ++ ")"
+--   show (TmTrue _)        = "true"
+--   show (TmFalse _)       = "false"
+--   show (TmIf _ t1 t2 t3) = "(TmIf " ++ show t1 ++ " " ++ show t2 ++
+--                              " " ++ show t3 ++ ")"
+--   show (TmZero _)        = "0"
+--   show (TmSucc _ t)      = "(succ " ++ show t ++ ")"
+--   show (TmPred _ t)      = "(pred " ++ show t ++ ")"
+--   show (TmIszero _ t)    = "(iszero " ++ show t ++ ")"
+--   show (TmFix _ t)       = "(fix " ++ show t ++ ")"
 
   
 instance Show (Command info) where
