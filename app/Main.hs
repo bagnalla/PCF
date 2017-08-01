@@ -8,7 +8,7 @@ import Core (isNumericValue, int_of_nat)
 import Interp (interpProg)
 import Parser (parseProg)
 import Preprocessor (importLines, substImports)
-import Tycheck (tycheckProg)
+import Tycheck (tycheckProg, runTycheck)
 
 main :: IO ()
 main = do
@@ -49,5 +49,5 @@ main = do
 
 parseAndTyCheck f = do
   p  <- parseProg "" f
-  p' <- tycheckProg p
+  p' <- runTycheck (tycheckProg p)
   return p'

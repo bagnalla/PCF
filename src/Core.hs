@@ -91,4 +91,4 @@ int_of_nat t =
     TmZero _   -> 0
     TmSucc _ t -> int_of_nat t + 1
     TmPred _ t -> int_of_nat t - 1
-    _          -> error "intOfNat: expected a nat term"
+    _          -> error "int_of_nat: expected a nat term"
